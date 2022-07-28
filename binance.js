@@ -11,7 +11,7 @@ export async function getTickets(option) {
         if(option.symbols){
             let strQuery = `"${option.symbols}"`;
             strQuery = strQuery.replaceAll(",",'","');
-            const query = encodeURIComponent(`[${strQuery}]`);
+            const query = encodeURIComponent(`[${strQuery.toUpperCase()}]`);
             const url = `${HOST}api/v3/ticker/price?symbols=${query}`;
             const result = await axios.get(url);
             return result.data;
