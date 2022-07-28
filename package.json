@@ -1,0 +1,26 @@
+{
+  "name": "binance-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "homepage": "https://github.com/danhpham1/binance-cli",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "binance",
+    "binance-cli"
+  ],
+  "author": "LoneLyBoy",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chalk": "^5.0.1",
+    "cli-table": "^0.3.11",
+    "commander": "^9.4.0"
+  },
+  "type": "module",
+  "bin": {
+    "binance": "node cli.js"
+  }
+}
