@@ -72,4 +72,52 @@ program
         }
     })
 
+program
+    .command("perpetual")
+    .description("Get perpetual futures price of coin")
+    .argument('<string>','coins')
+    .option("--full", "Get full price of all perpetual coins", 'full')
+    .option("--symbol <string>", "Get price of perpetual coin (e.g., BTCUSDT)", '')
+    .option("--symbols <string>", "Get price of perpetual coins with symbols (e.g., BTCUSDT,ETHUSDT)", '')
+    .action(async (data, options) => {
+        if(data !== 'coins'){
+            console.log(chalk.red("Error: Argument must be 'coins'"))
+            return;
+        }
+        if(options.symbol){
+            const data = await binance.getPerpetualTickets(options);
+            let table = new Table({
+                head: [chalk.yellow('Symbol'), chalk.blue('Price')],
+                colWidths: [50, 50]
+            });
+            table.push([`${chalk.yellow(data.symbol)}`,`${chalk.blue(parseFloat(data.price).toFixed(9))}${chalk.red('$')}`]);
+            console.log(table.toString());
+            return;
+        }
+        if(options.symbols){
+            const data = await binance.getPerpetualTickets(options);
+            let table = new Table({
+                head: [chalk.yellow('Symbol'), chalk.blue('Price')],
+                colWidths: [50, 50]
+            });
+            data.map(el => {
+                table.push([`${chalk.yellow(el.symbol)}`,`${chalk.blue(parseFloat(el.price).toFixed(9))}${chalk.red('$')}`]);
+            });
+            console.log(table.toString());
+            return;
+        }
+        if(options.full) {
+            const data = await binance.getPerpetualTickets(options);
+            let table = new Table({
+                head: [chalk.yellow('Symbol'), chalk.blue('Price')],
+                colWidths: [50, 50]
+            });
+            data.slice(0,30).map(el => {
+                table.push([`${chalk.yellow(el.symbol)}`,`${chalk.blue(parseFloat(el.price).toFixed(9))}${chalk.red('$')}`]);
+            });
+            console.log(table.toString());
+            return;
+        }
+    })
+
 program.parse();
